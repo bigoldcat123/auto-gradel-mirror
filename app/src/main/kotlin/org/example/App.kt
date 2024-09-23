@@ -16,16 +16,16 @@ import kotlin.io.path.PathWalkOption
 import kotlin.io.path.walk
 import kotlin.reflect.typeOf
 
-const val SETTING_FRE_CODE = "\"dependencyResolutionManagement {\\n\" +\n" +
-        "            \"    repositories{\\n\" +\n" +
-        "            \"        maven(\\\"https://mirrors.cloud.tencent.com/nexus/repository/maven-public/\\\")\\n\" +\n" +
-        "            \"    }\\n\" +\n" +
-        "            \"}\\n\" +\n" +
-        "            \"pluginManagement {\\n\" +\n" +
-        "            \"    repositories{\\n\" +\n" +
-        "            \"        maven(\\\"https://maven.aliyun.com/repository/gradle-plugin\\\")\\n\" +\n" +
-        "            \"    }\\n\" +\n" +
-        "            \"}\\n\""
+const val SETTING_FRE_CODE = "dependencyResolutionManagement {\n" +
+        "    repositories{\n" +
+        "        maven(\"https://mirrors.cloud.tencent.com/nexus/repository/maven-public/\")\n" +
+        "    }\n" +
+        "}\n" +
+        "pluginManagement {\n" +
+        "    repositories{\n" +
+        "        maven(\"https://maven.aliyun.com/repository/gradle-plugin\")\n" +
+        "    }\n" +
+        "}\n"
 
 const val BUILD_GRADLE_KTS = "build.gradle.kts"
 const val WRAPPER_PROPERTIES = "gradle-wrapper.properties"
@@ -56,8 +56,9 @@ fun convertSettings(path: String) {
     writeTo(path,result)
 }
 fun recursivePath(dir:String) {
-    File(dir).listFiles()?.forEach {
-        if(it.isDirectory && it.name.startsWith("."))return
+    val files = File(dir).listFiles() ?: return
+    for (it in files) {
+        if(it.name.startsWith("."))continue
         if(it.isFile){
             if(it.name.equals(BUILD_GRADLE_KTS)) {
                 convertBuild(it.absolutePath)
@@ -75,8 +76,8 @@ fun recursivePath(dir:String) {
     }
 }
 fun main(args:Array<String>) {
-    println()
-    var dir = System.getProperty("user.dir")
+    val dir = System.getProperty("user.dir")
+    println(dir)
     if(dir != null){
         recursivePath(dir)
         println("convert success")

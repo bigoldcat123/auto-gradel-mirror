@@ -15,7 +15,7 @@ plugins {
 
 repositories {
     // Use Maven Central for resolving dependencies.
-//    mavenCentral()
+//    
        maven("https://mirrors.cloud.tencent.com/nexus/repository/maven-public/")
 }
 
