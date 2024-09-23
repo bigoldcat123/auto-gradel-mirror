@@ -41,7 +41,7 @@ fun writeTo(path: String,code:String) {
 }
 fun convertBuild(path: String) {
     val code = getCode(path)
-    val result =  code.replace("mavenCentral()", "")
+    val result =  code.replace("mavenCentral()", "").replace("GradlePluginPortal()","")
     writeTo(path,result)
 }
 fun convertWrapperProperties (path: String) {
