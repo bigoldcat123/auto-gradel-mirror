@@ -27,7 +27,7 @@ const val SETTING_FRE_CODE = "dependencyResolutionManagement {\n" +
         "    }\n" +
         "}\n"
 
-const val BUILD_GRADLE_KTS = "build.gradle.kts"
+const val BUILD_GRADLE_KTS = "gradle.kts"
 const val WRAPPER_PROPERTIES = "gradle-wrapper.properties"
 const val SETTINGS_GRADLE_KTS = "settings.gradle.kts"
 fun getCode(path:String):String {
@@ -60,7 +60,7 @@ fun recursivePath(dir:String) {
     for (it in files) {
         if(it.name.startsWith("."))continue
         if(it.isFile){
-            if(it.name.equals(BUILD_GRADLE_KTS)) {
+            if(it.name.endsWith(BUILD_GRADLE_KTS)) {
                 convertBuild(it.absolutePath)
             }
             if(it.name.equals(WRAPPER_PROPERTIES)) {
